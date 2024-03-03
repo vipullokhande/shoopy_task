@@ -99,8 +99,6 @@ class _ChatScreenState extends State<ChatScreen> {
                     ? Alignment.topLeft
                     : Alignment.topRight,
                 margin: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                 child: Column(
                   crossAxisAlignment: messages[index].uid == 1
                       ? CrossAxisAlignment.start
@@ -110,44 +108,88 @@ class _ChatScreenState extends State<ChatScreen> {
                     ConstrainedBox(
                       constraints: BoxConstraints(
                         maxWidth: MediaQuery.of(context).size.width * 0.85,
+                        minWidth: MediaQuery.of(context).size.width * 0.2,
                       ),
                       child: Container(
-                        padding: const EdgeInsets.all(5).copyWith(
-                          left: messages[index].uid == 1 ? 15 : 10,
-                          right: messages[index].uid != 1 ? 15 : 10,
-                        ),
+                        clipBehavior: Clip.antiAlias,
+                        padding: const EdgeInsets.symmetric(vertical: 3),
                         decoration: BoxDecoration(
                           color: messages[index].uid == 1
-                              ? const Color.fromARGB(255, 224, 244, 225)
-                              : const Color.fromARGB(255, 248, 221, 224),
+                              ? const Color(0xff1f2c34)
+                              : const Color(0xff008369),
                           borderRadius: messages[index].uid == 1
                               ? const BorderRadius.only(
                                   topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
+                                  topRight: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15),
+                                  bottomRight: Radius.circular(15),
                                 )
                               : const BorderRadius.only(
-                                  topLeft: Radius.circular(10),
+                                  topLeft: Radius.circular(15),
                                   topRight: Radius.circular(0),
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
+                                  bottomLeft: Radius.circular(15),
+                                  bottomRight: Radius.circular(15),
                                 ),
                         ),
-                        child: Text(
-                          messages[index].message,
-                          maxLines: 20,
-                          textAlign: messages[index].uid == 1
-                              ? TextAlign.start
-                              : TextAlign.end,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: messages[index].uid == 1
-                                ? Colors.green
-                                : Colors.red,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17,
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                right: messages[index].message.length < 10
+                                    ? 60
+                                    : 45,
+                                left: 10,
+                              ),
+                              child: Text(
+                                messages[index].message,
+                                maxLines: 20,
+                                textAlign: messages[index].uid == 1
+                                    ? TextAlign.start
+                                    : TextAlign.end,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "12:08 PM",
+                                    maxLines: 1,
+                                    textAlign: messages[index].uid == 1
+                                        ? TextAlign.start
+                                        : TextAlign.end,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: messages[index].uid == 1
+                                          ? const Color(0xff8796a0)
+                                          : const Color(0xff90beb6),
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                  messages[index].uid != 1
+                                      ? Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 3),
+                                          child: Icon(
+                                            MdiIcons.checkAll,
+                                            color: Colors.blue,
+                                            size: 17,
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
